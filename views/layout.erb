@@ -1,0 +1,32 @@
+<%# encoding: utf-8  %>
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link href="/css/main.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--[if lt IE 9]>
+      <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->    
+    <!--[if IE]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title><%= @meta_title %></title>
+    <meta name="description" content="<%= @meta_description %>" />
+    <% if ENV['RACK_ENV']=='production' %>
+      <!-- GA -->
+    <% end %>
+  </head>
+  <body>
+
+    <header>
+      <h1>Title</h1>
+    </header>
+
+    <%= yield %>
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/main.js" type="text/javascript" charset="utf-8"></script>
+  </body>
+</html>
+

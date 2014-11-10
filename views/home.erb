@@ -1,0 +1,12 @@
+<%# encoding: utf-8 %>
+<ol>
+  <% @posts.each do |p| %>
+    <li>
+      <h1>
+        <a href='/<%= p['_id'] %>'><%= p['title'] %></a>
+      </h1>
+      <p><%= p['summary'] %></p>
+    </li>
+  <% end %>
+</ol>
+

@@ -1,0 +1,43 @@
+<%# encoding: utf-8 %>
+
+<form action="/admin/post<%= ('/'+params[:id]) unless params[:id].nil? %>" method="post" accept-charset="utf-8">
+  <div>
+    <label>
+      ID<br>
+      <% if params[:id].nil? %>
+        <input type="text" name="doc[_id]" value="<%= @post['_id'] %>" />
+      <% else %>
+        <%= params[:id] %>
+      <% end %>
+    </label>
+  </div>
+  <div>
+    <label>
+      Title<br>
+      <input type="text" name="doc[title]" value="<%= @post['title'] %>" />
+    </label>
+  </div>
+  <div>
+    <label>
+      Summary<br>
+      <textarea name="doc[summary]"><%= @post['summary'] %></textarea>
+    </label>
+  </div>
+  <div>
+    <label>
+      Content<br>
+      <textarea name="doc[content]"><%= @post['content'] %></textarea>
+    </label>
+  </div>
+  <div>
+    <label>
+      Date<br>
+      <input type="date" name="doc[date]" value="<%= (@post['date']||Date.today).strftime('%Y-%m-%d') %>" />
+    </label>
+  </div>
+  <% unless params[:id].nil? %>
+    <input type="hidden" name="_method" value="PUT" />
+  <% end %>
+  <input type="submit" value="<%= params[:id].nil? ? 'Create' : 'Update' %>" />
+</form>
+

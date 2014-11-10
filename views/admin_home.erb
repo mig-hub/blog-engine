@@ -1,0 +1,19 @@
+<%# encoding: utf-8 %>
+<p>
+  <a href="/admin/post">+</a>
+</p>
+
+<ol>
+  <% @posts.each do |p| %>
+    <li>
+      <h1>
+        <a href='/admin/post/<%= p['_id'] %>'><%= p['title'] %></a>
+      </h1>
+      <form action="/admin/post/<%= p['_id'] %>" method="post" accept-charset="utf-8">
+        <input type="hidden" name="_method" value="DELETE" />
+        <input type="submit" value="x" />
+      </form>
+    </li>
+  <% end %>
+</ol>
+
