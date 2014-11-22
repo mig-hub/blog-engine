@@ -1,4 +1,5 @@
 <%# encoding: utf-8 %>
+<h1>Posts</h1>
 <p>
   <a href="/admin/post">+</a>
 </p>
@@ -6,10 +7,28 @@
 <ol>
   <% @posts.each do |p| %>
     <li>
-      <h1>
+      <h2>
         <a href='/admin/post/<%= p['_id'] %>'><%= p['title'] %></a>
-      </h1>
+      </h2>
       <form action="/admin/post/<%= p['_id'] %>" method="post" accept-charset="utf-8">
+        <input type="hidden" name="_method" value="DELETE" />
+        <input type="submit" value="x" />
+      </form>
+    </li>
+  <% end %>
+</ol>
+
+<h1>Files</h1>
+<p>
+  <a href="/admin/file">+</a>
+</p>
+
+<ol>
+  <% @files.each do |f| %>
+    <li>
+      <img src="/file/<%= f['filename'] %>" alt="<%= f['metadata']['description'] %>" />
+      <h2><%= f['filename'] %></h2>
+      <form action="/admin/file/<%= f['_id'] %>" method="post" accept-charset="utf-8">
         <input type="hidden" name="_method" value="DELETE" />
         <input type="submit" value="x" />
       </form>

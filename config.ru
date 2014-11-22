@@ -23,7 +23,9 @@ else
   MONGO = Mongo::MongoClient.new
   DB  = MONGO['blog-dev']
 end
+GRID = Mongo::Grid.new(DB)
 Posts = DB['posts']
+Files = DB['fs.files']
 
 require 'sinatra/base'
 
@@ -61,14 +63,11 @@ class Admin < Sinatra::Base
   end
 
   get '/' do
-    redirect('/admin/posts')
-  end
-
-  get '/posts' do
     @posts = Posts.find({}, {
       fields: [:_id, :title, :date],
       sort: [[:date, :desc]]
     }).to_a
+    @files = Files.find({},{sort: [[:upload_date, :desc]]}).to_a
     erb :admin_home
   end
 
@@ -81,7 +80,7 @@ class Admin < Sinatra::Base
     doc = params[:doc].dup
     doc['date'] = Date.strptime(doc['date'],'%Y-%m-%d').to_time.utc
     Posts.insert(doc)
-    redirect('/admin/posts')
+    redirect('/admin')
   end
 
   get '/post/:id' do
@@ -94,12 +93,34 @@ class Admin < Sinatra::Base
     doc = params[:doc].dup
     doc['date'] = Date.strptime(doc['date'],'%Y-%m-%d').to_time.utc
     Posts.update({_id: params[:id]}, {'$set'=>doc})
-    redirect('/admin/posts')
+    redirect('/admin')
   end
 
   delete '/post/:id' do
     Posts.remove({_id: params[:id]})
-    redirect('/admin/posts')
+    redirect('/admin')
+  end
+
+  get '/file' do
+    erb :form_file
+  end
+
+  post '/file' do
+    doc = params[:doc].dup
+    id = doc['file'][:filename].sub(/\.[^.]*$/,'')
+    GRID.put(doc['file'][:tempfile],{
+      _id: id,
+      filename: doc['file'][:filename],
+      content_type: doc['file'][:type],
+      chunk_size: 100*1024,
+      metadata: {description: doc['description']}
+    })
+    redirect('/admin')
+  end
+
+  delete '/file/:id' do
+    GRID.delete(params[:id])
+    redirect('/admin')
   end
   
   get '/https-warning' do
@@ -108,6 +129,8 @@ class Admin < Sinatra::Base
 
 end
 
+require 'rack/gridfs'
+use ::Rack::GridFS, db: DB, prefix: 'file', lookup: :path
 map '/admin' do run Admin end
 map '/' do run Main end
 
