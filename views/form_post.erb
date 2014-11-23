@@ -35,6 +35,13 @@
       <input type="date" name="doc[date]" value="<%= (@post['date']||Date.today).strftime('%Y-%m-%d') %>" />
     </label>
   </div>
+  <div>
+    <label>
+      Published<br>
+      <input type="hidden" name='doc[published]' value='false' />
+      <input type='checkbox' name='doc[published]' value='true' <%= 'checked' if @post['published'] %> />
+    </label>
+  </div>
   <% unless params[:id].nil? %>
     <input type="hidden" name="_method" value="PUT" />
   <% end %>

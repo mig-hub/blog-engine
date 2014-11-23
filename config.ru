@@ -77,10 +77,7 @@ class Admin < Sinatra::Base
   end
 
   post '/post' do
-    doc = params[:doc].dup
-    doc['date'] = Date.strptime(doc['date'],'%Y-%m-%d').to_time.utc
-    doc['thumbnail'] = detect_thumbnail doc['content']
-    Posts.insert(doc)
+    Posts.insert(formated_doc)
     redirect('/admin')
   end
 
@@ -91,10 +88,7 @@ class Admin < Sinatra::Base
   end
 
   put '/post/:id' do
-    doc = params[:doc].dup
-    doc['date'] = Date.strptime(doc['date'],'%Y-%m-%d').to_time.utc
-    doc['thumbnail'] = detect_thumbnail doc['content']
-    Posts.update({_id: params[:id]}, {'$set'=>doc})
+    Posts.update({_id: params[:id]}, {'$set'=>formated_doc})
     redirect('/admin')
   end
 
@@ -130,9 +124,19 @@ class Admin < Sinatra::Base
   end
 
   helpers do
+
+    def formated_doc
+      doc = params[:doc].dup
+      doc['date'] = Date.strptime(doc['date'],'%Y-%m-%d').to_time.utc
+      doc['thumbnail'] = detect_thumbnail doc['content']
+      doc['published'] = doc['published']=='true' ? true : false
+      doc
+    end
+
     def detect_thumbnail s
       s.to_s=~/!\[[^\]]*\]\(([^\)]*)\)/ ? $1 : nil
     end
+
   end
 
 end
