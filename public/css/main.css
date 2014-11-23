@@ -1,0 +1,25 @@
+@import url(http://fonts.googleapis.com/css?family=Vollkorn:400,700);
+* {
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box; 
+}
+section, article, header, footer, nav, aside,
+figure, figcaption { display: block; }
+img { border: 0px; width: 100%; }
+html {
+  background: hsla(180, 25%, 50%, 1);
+  margin: 0; padding: 0;
+  height: 100%;
+}
+body {
+  font-family: 'Vollkorn', serif;
+  font-size: 1.125em;
+  background: hsla(180, 25%, 80%, 1);
+  color: hsla(180, 25%, 20%, 1);
+  width: 100%; max-width: 960px;
+  margin: 0 auto; padding: 1em;
+  height: 100%;
+}
+a { color: inherit; }
+
