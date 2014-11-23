@@ -8,6 +8,9 @@
   <% @posts.each do |p| %>
     <li>
       <h2>
+        <% unless p['thumbnail'].nil? %>
+          <img src="<%= p['thumbnail'] %>" alt="<%= p['title'] %>" />
+        <% end %>
         <a href='/admin/post/<%= p['_id'] %>'><%= p['title'] %></a>
       </h2>
       <form action="/admin/post/<%= p['_id'] %>" method="post" accept-charset="utf-8">

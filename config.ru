@@ -33,7 +33,7 @@ class Main < Sinatra::Base
 
   get '/' do
     @posts = Posts.find({published: true}, {
-      fields: [:_id, :title, :summary, :created_at, :published],
+      fields: [:_id, :title, :summary, :thumbnail, :created_at, :published],
       sort: [[:date, :desc]]
     }).to_a
     erb :home
@@ -64,7 +64,7 @@ class Admin < Sinatra::Base
 
   get '/' do
     @posts = Posts.find({}, {
-      fields: [:_id, :title, :date],
+      fields: [:_id, :title, :date, :thumbnail],
       sort: [[:date, :desc]]
     }).to_a
     @files = Files.find({},{sort: [[:upload_date, :desc]]}).to_a
@@ -79,6 +79,7 @@ class Admin < Sinatra::Base
   post '/post' do
     doc = params[:doc].dup
     doc['date'] = Date.strptime(doc['date'],'%Y-%m-%d').to_time.utc
+    doc['thumbnail'] = detect_thumbnail doc['content']
     Posts.insert(doc)
     redirect('/admin')
   end
@@ -92,6 +93,7 @@ class Admin < Sinatra::Base
   put '/post/:id' do
     doc = params[:doc].dup
     doc['date'] = Date.strptime(doc['date'],'%Y-%m-%d').to_time.utc
+    doc['thumbnail'] = detect_thumbnail doc['content']
     Posts.update({_id: params[:id]}, {'$set'=>doc})
     redirect('/admin')
   end
@@ -125,6 +127,12 @@ class Admin < Sinatra::Base
   
   get '/https-warning' do
     erb :https_warning
+  end
+
+  helpers do
+    def detect_thumbnail s
+      s.to_s=~/!\[[^\]]*\]\(([^\)]*)\)/ ? $1 : nil
+    end
   end
 
 end
