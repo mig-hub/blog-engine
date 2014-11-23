@@ -1,4 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Vollkorn:400,700);
+
+/* General */
+
 * {
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
@@ -7,19 +10,59 @@
 section, article, header, footer, nav, aside,
 figure, figcaption { display: block; }
 img { border: 0px; width: 100%; }
+a { color: inherit; }
+h1, h2 { font-weight: normal; }
+h1 { font-size: 2.6; }
+h2 { font-size: 1.625em ; }
+
+/* Layout */
+
 html {
   background: hsla(180, 25%, 50%, 1);
   margin: 0; padding: 0;
-  height: 100%;
 }
 body {
   font-family: 'Vollkorn', serif;
   font-size: 1.125em;
-  background: hsla(180, 25%, 80%, 1);
   color: hsla(180, 25%, 20%, 1);
   width: 100%; max-width: 960px;
-  margin: 0 auto; padding: 1em;
-  height: 100%;
+  margin: 0 auto;
 }
-a { color: inherit; }
+body > * { padding: 20px; }
+
+/* Header */
+
+body > header {
+  background: hsla(180, 25%, 50%, 1);
+  color: hsla(180, 25%, 80%, 1);
+}
+
+/* Blog */
+
+body > section {
+  background: hsla(180, 25%, 80%, 1);
+}
+
+/* Footer */
+
+body > footer {
+  background: hsla(180, 25%, 50%, 1);
+  font-size: 0.615em;
+}
+
+/* Admin */
+
+a[title=Create] { text-decoration: none; }
+li form { display: inline; }
+li form > * { margin: 0; }
+input[title=Delete] { 
+  border: 0; background: transparent; color: inherit; }
+form > * { margin-top: 1em; margin-bottom: 1em; }
+input[type=text], input[type=date], textarea {
+  border: 0; margin: 0; padding: 3px;
+  width: 61.15%;
+}
+textarea { height: 5em; }
+textarea[name='doc[content]'] { height: 25em; }
+input[type=submit] { cursor: pointer; }
 

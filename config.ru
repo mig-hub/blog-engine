@@ -31,6 +31,11 @@ require 'sinatra/base'
 
 class Main < Sinatra::Base
 
+  before do
+    @meta_title = 'Sombrero Fallout'
+    @meta_description = "Mickael Riga writes about computing, artists and more"
+  end
+
   get '/' do
     @posts = Posts.find({published: true}, {
       fields: [:_id, :title, :summary, :thumbnail, :created_at, :published],
@@ -42,7 +47,7 @@ class Main < Sinatra::Base
   get '/:id' do
     @post = Posts.find_one(_id: params[:id], published: true)
     pass if @post.nil?
-    @meta_title = @post['title']
+    @meta_title = "#{@post['title']} - #{@meta_title}"
     @meta_description = @post['summary']
     erb :post
   end

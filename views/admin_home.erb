@@ -1,8 +1,5 @@
 <%# encoding: utf-8 %>
-<h1>Posts</h1>
-<p>
-  <a href="/admin/post">+</a>
-</p>
+<h1>Posts <a href="/admin/post" title='Create'>+</a></h1>
 
 <ol>
   <% @posts.each do |p| %>
@@ -11,30 +8,29 @@
         <% unless p['thumbnail'].nil? %>
           <img src="<%= p['thumbnail'] %>" alt="<%= p['title'] %>" />
         <% end %>
-        <a href='/admin/post/<%= p['_id'] %>'><%= p['title'] %></a>
+        <a href='/admin/post/<%= p['_id'] %>'><%= p['title'] %></a> 
+        <form action="/admin/post/<%= p['_id'] %>" method="post" accept-charset="utf-8">
+          <input type="hidden" name="_method" value="DELETE" />
+          <input type="submit" value="x" title='Delete' />
+        </form>
       </h2>
-      <form action="/admin/post/<%= p['_id'] %>" method="post" accept-charset="utf-8">
-        <input type="hidden" name="_method" value="DELETE" />
-        <input type="submit" value="x" />
-      </form>
     </li>
   <% end %>
 </ol>
 
-<h1>Files</h1>
-<p>
-  <a href="/admin/file">+</a>
-</p>
+<h1>Files <a href="/admin/file" title='Create'>+</a></h1>
 
 <ol>
   <% @files.each do |f| %>
     <li>
       <img src="/file/<%= f['filename'] %>" alt="<%= f['metadata']['description'] %>" />
-      <h2><%= f['filename'] %></h2>
-      <form action="/admin/file/<%= f['_id'] %>" method="post" accept-charset="utf-8">
-        <input type="hidden" name="_method" value="DELETE" />
-        <input type="submit" value="x" />
-      </form>
+      <h2>
+        <%= f['filename'] %> 
+        <form action="/admin/file/<%= f['_id'] %>" method="post" accept-charset="utf-8">
+          <input type="hidden" name="_method" value="DELETE" />
+          <input type="submit" value="x" title='Delete' />
+        </form>
+      </h2>
     </li>
   <% end %>
 </ol>
