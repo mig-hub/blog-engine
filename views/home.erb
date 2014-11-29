@@ -1,13 +1,19 @@
 <%# encoding: utf-8 %>
-<% @posts.each do |p| %>
-  <article>
-    <header>
-      <h1>
-        <a href='/<%= p['_id'] %>'><%= p['title'] %></a>
-      </h1>
-    </header>
-    <p><%= p['summary'] %></p>
-    <%= MD.render(p['content'].to_s) %>
-  </article>
-<% end %>
+<ol>
+  <% @posts.each do |p| %>
+    <li>
+      <article>
+        <header>
+          <h1><a href='/<%= p['_id'] %>'><%= p['title'] %></a></h1>
+          <% if p['date'].respond_to?(:strftime) %>
+            <p><%= p['date'].strftime('%d %b %Y') %></p>
+          <% end %>
+        </header><section>
+          <p><%= p['summary'] %></p>
+          <p><a href="/<%= p['_id'] %>">Read more &rarr;</a></p>
+        </section>
+      </article>
+    </li>
+  <% end %>
+</ol>
 

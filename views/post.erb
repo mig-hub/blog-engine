@@ -1,4 +1,4 @@
 <%# encoding: utf-8 %>
 <h1><%= @post['title'] %></h1>
-<%= MD.render @post['content'] %>
+<%= MD.render @post['content'].to_s %>
 

@@ -20,6 +20,7 @@ h2 { font-size: 1.625em ; }
 html {
   background: hsla(180, 25%, 50%, 1);
   margin: 0; padding: 0;
+  -webkit-font-smoothing: antialiased;
 }
 body {
   font-family: 'Vollkorn', serif;
@@ -28,20 +29,32 @@ body {
   width: 100%; max-width: 960px;
   margin: 0 auto;
 }
-body > * { padding: 20px; }
+body > header, body > footer,
+ol article > * { padding: 20px; }
+body > section > ol { list-style: none; margin: 0; padding: 0; }
 
 /* Header */
 
 body > header {
-  background: hsla(180, 25%, 50%, 1);
+  background: hsla(180, 25%, 20%, 1);
   color: hsla(180, 25%, 80%, 1);
 }
 
-/* Blog */
+/* Content */
 
 body > section {
   background: hsla(180, 25%, 80%, 1);
 }
+
+ol article > * {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: top;
+  zoom: 1;
+  *display: inline;
+}
+ol article > header { width: 38%; }
+ol article > section { width: 62%; }
 
 /* Footer */
 

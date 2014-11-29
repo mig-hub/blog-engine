@@ -38,7 +38,7 @@ class Main < Sinatra::Base
 
   get '/' do
     @posts = Posts.find({published: true}, {
-      fields: [:_id, :title, :summary, :thumbnail, :created_at, :published],
+      fields: [:_id, :title, :summary, :thumbnail, :date, :published],
       sort: [[:date, :desc]]
     }).to_a
     erb :home
