@@ -6,10 +6,11 @@ require 'date'
 require 'redcarpet'
 
 MD = Redcarpet::Markdown.new(
-  Redcarpet::Render::HTML.new(:hard_wrap => true),
-  :autolink => true,
-  :no_intra_emphasis=>true,
-  :space_after_headers => true
+  Redcarpet::Render::HTML.new(hard_wrap: true),
+  autolink: true,
+  no_intra_emphasis: true,
+  fenced_code_blocks: true,
+  space_after_headers: true
 )
 
 require 'mongo'
